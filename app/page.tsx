@@ -13,8 +13,6 @@ interface BusinessName {
 
 export default function Home() {
   const [businessType, setBusinessType] = useState("");
-  const [keywords, setKeywords] = useState("");
-  const [style, setStyle] = useState("modern");
   const [results, setResults] = useState<BusinessName[]>([]);
   const [loading, setLoading] = useState(false);
   const [usageCount, setUsageCount] = useState(0);
@@ -40,7 +38,7 @@ export default function Home() {
       const res = await fetch("/api/generate", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ businessType, keywords, style }),
+        body: JSON.stringify({ businessType, keywords: "", style: "modern" }),
       });
       const data = await res.json();
       setResults(data.names);
@@ -62,101 +60,235 @@ export default function Home() {
     setTimeout(() => setCopied(null), 2000);
   };
 
-  const remainingFree = Math.max(0, FREE_LIMIT - usageCount);
+  const remaining = Math.max(0, FREE_LIMIT - usageCount);
 
   return (
     <main style={{ minHeight: "100vh", background: "#08080F", color: "#fff", fontFamily: "'DM Sans', sans-serif" }}>
-      <header style={{ padding: "24px 40px", borderBottom: "1px solid #1a1a2e", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-        <div style={{ fontFamily: "sans-serif", fontSize: "22px", fontWeight: 700 }}>
-          <span style={{ color: "#7B5EFF" }}>Gen</span>Forge
+      
+      {/* Header */}
+      <header style={{ padding: "20px 24px", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+        <div style={{ fontFamily: "sans-serif", fontSize: "20px", fontWeight: 800, color: "#7B5EFF" }}>
+          Gen<span style={{ color: "#fff" }}>Forge</span>
         </div>
-        {!isPro && (
-          <div style={{ fontSize: "13px", color: "#666" }}>
-            {remainingFree > 0 ? `${remainingFree} free generations left` : "Limit reached"}
-          </div>
-        )}
-        {isPro && <div style={{ fontSize: "13px", color: "#00E5FF" }}>✓ Pro</div>}
+        <div style={{ border: "1px solid #00E5FF", borderRadius: "20px", padding: "6px 14px", fontSize: "12px", color: "#00E5FF" }}>
+          AI-Powered
+        </div>
       </header>
 
-      <section style={{ textAlign: "center", padding: "80px 20px 40px" }}>
-        <h1 style={{ fontSize: "clamp(36px, 6vw, 72px)", fontWeight: 800, lineHeight: 1.1, marginBottom: "20px" }}>
-          Find the perfect<br />
-          <span style={{ color: "#7B5EFF" }}>business </span>
-          <span style={{ color: "#00E5FF" }}>name</span>
+      {/* Hero */}
+      <section style={{ textAlign: "center", padding: "60px 24px 40px", position: "relative" }}>
+        {/* Grid background */}
+        <div style={{
+          position: "absolute", inset: 0,
+          backgroundImage: "linear-gradient(#7B5EFF11 1px, transparent 1px), linear-gradient(90deg, #7B5EFF11 1px, transparent 1px)",
+          backgroundSize: "60px 60px",
+          pointerEvents: "none"
+        }} />
+        
+        {/* Badge */}
+        <div style={{
+          display: "inline-flex", alignItems: "center", gap: "8px",
+          border: "1px solid #7B5EFF44", borderRadius: "20px",
+          padding: "6px 16px", fontSize: "11px", letterSpacing: "2px",
+          color: "#888", marginBottom: "32px"
+        }}>
+          <span style={{ width: "6px", height: "6px", borderRadius: "50%", background: "#7B5EFF", display: "inline-block" }} />
+          BUSINESS NAME GENERATOR
+        </div>
+
+        <h1 style={{ fontSize: "clamp(36px, 8vw, 64px)", fontWeight: 800, lineHeight: 1.1, marginBottom: "20px", position: "relative" }}>
+          Generate <span style={{ color: "#7B5EFF" }}>1000+</span><br />
+          Business Names<br />
+          in Seconds
         </h1>
-        <p style={{ color: "#888", fontSize: "18px", maxWidth: "500px", margin: "0 auto" }}>
-          AI generates unique names for your business in seconds.
+        <p style={{ color: "#666", fontSize: "16px", lineHeight: 1.6, marginBottom: "0" }}>
+          10 free ideas instantly. No signup required.<br />
+          Upgrade once for unlimited names.
         </p>
       </section>
 
-      <section style={{ maxWidth: "600px", margin: "0 auto", padding: "0 20px 60px" }}>
-        <div style={{ display: "flex", flexDirection: "column", gap: "16px" }}>
-          <input value={businessType} onChange={(e) => setBusinessType(e.target.value)} placeholder="What's your business? (e.g. coffee shop, gym...)" style={inputStyle} />
-          <input value={keywords} onChange={(e) => setKeywords(e.target.value)} placeholder="Keywords or themes (optional)" style={inputStyle} />
-          <select value={style} onChange={(e) => setStyle(e.target.value)} style={inputStyle}>
-            <option value="modern">Modern & Tech</option>
-            <option value="playful">Playful & Friendly</option>
-            <option value="luxury">Luxury & Premium</option>
-            <option value="minimal">Minimalist</option>
-            <option value="bold">Bold & Direct</option>
-          </select>
-          <button onClick={handleGenerate} disabled={loading || !businessType.trim()} style={{ background: loading ? "#333" : "linear-gradient(135deg, #7B5EFF, #00E5FF)", color: "#fff", border: "none", borderRadius: "12px", padding: "16px 32px", fontSize: "16px", fontWeight: 700, cursor: loading ? "not-allowed" : "pointer" }}>
-            {loading ? "Generating..." : "⚡ Generate Names"}
-          </button>
-        </div>
+      {/* Form */}
+      <section style={{ maxWidth: "600px", margin: "0 auto", padding: "0 24px 40px" }}>
+        <input
+          value={businessType}
+          onChange={(e) => setBusinessType(e.target.value)}
+          onKeyDown={(e) => e.key === "Enter" && handleGenerate()}
+          placeholder="Enter your business type (e.g. coffee shop, gym...)"
+          style={{
+            width: "100%", background: "#0f0f1a", border: "1px solid #7B5EFF44",
+            borderRadius: "12px", padding: "16px 20px", color: "#fff",
+            fontSize: "15px", outline: "none", boxSizing: "border-box",
+            marginBottom: "12px"
+          }}
+        />
+        
+        <button
+          onClick={handleGenerate}
+          disabled={loading || !businessType.trim()}
+          style={{
+            width: "100%", background: loading ? "#333" : "linear-gradient(135deg, #7B5EFF, #5B3EDD)",
+            color: "#fff", border: "none", borderRadius: "12px",
+            padding: "16px", fontSize: "16px", fontWeight: 700,
+            cursor: loading ? "not-allowed" : "pointer", marginBottom: "16px"
+          }}
+        >
+          {loading ? "Generating..." : "⚡ Generate Business Names"}
+        </button>
+
+        {/* Dots indicator */}
+        {!isPro && (
+          <div style={{ display: "flex", alignItems: "center", gap: "8px", justifyContent: "center" }}>
+            {[0, 1, 2].map(i => (
+              <div key={i} style={{
+                width: "10px", height: "10px", borderRadius: "50%",
+                background: i < remaining ? "#7B5EFF" : "#333"
+              }} />
+            ))}
+            <span style={{ color: "#666", fontSize: "13px", marginLeft: "4px" }}>
+              {remaining} of 3 free generations remaining
+            </span>
+          </div>
+        )}
       </section>
 
-      {results.length > 0 && (
-        <section style={{ maxWidth: "700px", margin: "0 auto", padding: "0 20px 80px" }}>
-          <h2 style={{ fontSize: "22px", marginBottom: "24px", color: "#ccc" }}>Generated Names</h2>
-          <div style={{ display: "flex", flexDirection: "column", gap: "16px" }}>
+      {/* Results */}
+      {results.length > 0 ? (
+        <section style={{ maxWidth: "700px", margin: "0 auto", padding: "0 24px 40px" }}>
+          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "12px" }}>
             {results.map((item, i) => (
-              <div key={i} style={{ background: "#0f0f1a", border: "1px solid #1a1a2e", borderRadius: "16px", padding: "20px 24px" }}>
-                <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start" }}>
-                  <div>
-                    <div style={{ fontSize: "24px", fontWeight: 700, marginBottom: "4px" }}>{item.name}</div>
-                    <div style={{ color: "#7B5EFF", fontSize: "14px", marginBottom: "8px" }}>{item.tagline}</div>
-                    <div style={{ color: "#666", fontSize: "13px" }}>{item.reason}</div>
-                  </div>
-                  <button onClick={() => handleCopy(item.name)} style={{ background: copied === item.name ? "#00E5FF22" : "#1a1a2e", color: copied === item.name ? "#00E5FF" : "#666", border: "1px solid #222", borderRadius: "8px", padding: "8px 14px", cursor: "pointer", fontSize: "12px", flexShrink: 0 }}>
-                    {copied === item.name ? "✓ Copied" : "Copy"}
-                  </button>
+              <div key={i} style={{
+                background: "#0f0f1a", border: "1px solid #1a1a2e",
+                borderRadius: "12px", padding: "16px 20px",
+                display: "flex", justifyContent: "space-between", alignItems: "center"
+              }}>
+                <div>
+                  <div style={{ fontWeight: 700, fontSize: "16px", marginBottom: "4px" }}>{item.name}</div>
+                  <div style={{ color: "#666", fontSize: "12px" }}>{item.tagline}</div>
                 </div>
+                <button
+                  onClick={() => handleCopy(item.name)}
+                  style={{
+                    background: "none", border: "1px solid #333", borderRadius: "8px",
+                    padding: "6px 10px", cursor: "pointer", color: copied === item.name ? "#00E5FF" : "#666",
+                    fontSize: "12px", flexShrink: 0, marginLeft: "8px"
+                  }}
+                >
+                  {copied === item.name ? "✓" : "⧉"}
+                </button>
+              </div>
+            ))}
+          </div>
+        </section>
+      ) : (
+        /* Example results */
+        <section style={{ maxWidth: "700px", margin: "0 auto", padding: "0 24px 40px" }}>
+          <div style={{ color: "#444", fontSize: "11px", letterSpacing: "1px", marginBottom: "12px" }}>
+            — EXAMPLE RESULTS FOR "TECH STARTUP"
+          </div>
+          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "12px" }}>
+            {["NexaCore", "Vaultix", "Syntrex", "Zephyr Labs", "Orbio", "Kaldra"].map((name) => (
+              <div key={name} style={{
+                background: "#0f0f1a", border: "1px solid #1a1a2e",
+                borderRadius: "12px", padding: "16px 20px",
+                display: "flex", justifyContent: "space-between", alignItems: "center"
+              }}>
+                <span style={{ fontWeight: 700 }}>{name}</span>
+                <span style={{ color: "#333", fontSize: "16px" }}>⧉</span>
               </div>
             ))}
           </div>
         </section>
       )}
 
-      {showPaywall && (
-        <div style={{ position: "fixed", inset: 0, background: "rgba(0,0,0,0.85)", display: "flex", alignItems: "center", justifyContent: "center", zIndex: 100 }}>
-          <div style={{ background: "#0f0f1a", border: "1px solid #7B5EFF44", borderRadius: "20px", padding: "40px", maxWidth: "420px", textAlign: "center" }}>
-            <div style={{ fontSize: "40px", marginBottom: "16px" }}>⚡</div>
-            <h2 style={{ fontSize: "26px", marginBottom: "12px" }}>You've reached the limit</h2>
-            <p style={{ color: "#888", marginBottom: "28px" }}>You've used your 3 free generations. Unlock unlimited generations with a one-time payment.</p>
-            <div style={{ background: "linear-gradient(135deg, #7B5EFF22, #00E5FF11)", border: "1px solid #7B5EFF44", borderRadius: "12px", padding: "20px", marginBottom: "24px" }}>
-              <div style={{ fontSize: "36px", fontWeight: 800 }}>€4.99</div>
-              <div style={{ color: "#888", fontSize: "14px" }}>one-time · no subscription</div>
+      {/* Bullets */}
+      <section style={{ maxWidth: "600px", margin: "0 auto", padding: "0 24px 40px" }}>
+        <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "12px" }}>
+          {[
+            { icon: "✓", text: "No signup needed" },
+            { icon: "✓", text: "Instant results" },
+            { icon: "✓", text: "No subscription" },
+            { icon: "★", text: "500+ entrepreneurs" },
+          ].map((item) => (
+            <div key={item.text} style={{ display: "flex", alignItems: "center", gap: "8px", color: "#666", fontSize: "14px" }}>
+              <div style={{
+                width: "20px", height: "20px", borderRadius: "50%",
+                background: "#7B5EFF22", border: "1px solid #7B5EFF44",
+                display: "flex", alignItems: "center", justifyContent: "center",
+                fontSize: "10px", color: "#7B5EFF", flexShrink: 0
+              }}>
+                {item.icon}
+              </div>
+              {item.text}
             </div>
-            <button style={{ width: "100%", background: "linear-gradient(135deg, #7B5EFF, #00E5FF)", color: "#fff", border: "none", borderRadius: "12px", padding: "16px", fontSize: "16px", fontWeight: 700, cursor: "pointer", marginBottom: "12px" }}>
-              Unlock for €4.99
+          ))}
+        </div>
+      </section>
+
+      {/* Upgrade card */}
+      {!isPro && (
+        <section style={{ maxWidth: "600px", margin: "0 auto", padding: "0 24px 80px" }}>
+          <div style={{
+            background: "#0f0f1a", border: "1px solid #7B5EFF44",
+            borderRadius: "16px", padding: "28px 24px"
+          }}>
+            <h3 style={{ fontSize: "22px", fontWeight: 800, marginBottom: "8px" }}>
+              Unlock <span style={{ color: "#7B5EFF" }}>Unlimited</span> Names
+            </h3>
+            <p style={{ color: "#666", fontSize: "14px", marginBottom: "20px" }}>
+              One-time payment. No subscription. Ever.
+            </p>
+            <button
+              onClick={() => setShowPaywall(true)}
+              style={{
+                width: "100%", background: "none",
+                border: "1px solid #7B5EFF", borderRadius: "10px",
+                padding: "14px", fontSize: "15px", fontWeight: 700,
+                cursor: "pointer", color: "#7B5EFF"
+              }}
+            >
+              Get Unlimited — €4.99
             </button>
-            <div onClick={() => setShowPaywall(false)} style={{ color: "#444", fontSize: "13px", cursor: "pointer" }}>Close</div>
+          </div>
+        </section>
+      )}
+
+      {/* Paywall Modal */}
+      {showPaywall && (
+        <div style={{
+          position: "fixed", inset: 0, background: "rgba(0,0,0,0.85)",
+          display: "flex", alignItems: "center", justifyContent: "center", zIndex: 100
+        }}>
+          <div style={{
+            background: "#0f0f1a", border: "1px solid #7B5EFF44",
+            borderRadius: "20px", padding: "40px", maxWidth: "420px",
+            width: "90%", textAlign: "center"
+          }}>
+            <div style={{ fontSize: "40px", marginBottom: "16px" }}>⚡</div>
+            <h2 style={{ fontSize: "24px", marginBottom: "12px" }}>Unlock Unlimited Names</h2>
+            <p style={{ color: "#888", marginBottom: "28px", fontSize: "14px" }}>
+              One-time payment. No subscription. Ever.
+            </p>
+            <div style={{
+              background: "#7B5EFF11", border: "1px solid #7B5EFF44",
+              borderRadius: "12px", padding: "20px", marginBottom: "20px"
+            }}>
+              <div style={{ fontSize: "36px", fontWeight: 800 }}>€4.99</div>
+              <div style={{ color: "#888", fontSize: "13px" }}>one-time · no subscription</div>
+            </div>
+            <button style={{
+              width: "100%", background: "linear-gradient(135deg, #7B5EFF, #00E5FF)",
+              color: "#fff", border: "none", borderRadius: "12px",
+              padding: "16px", fontSize: "16px", fontWeight: 700,
+              cursor: "pointer", marginBottom: "12px"
+            }}>
+              Get Unlimited — €4.99
+            </button>
+            <div onClick={() => setShowPaywall(false)} style={{ color: "#444", fontSize: "13px", cursor: "pointer" }}>
+              Close
+            </div>
           </div>
         </div>
       )}
     </main>
   );
 }
-
-const inputStyle: React.CSSProperties = {
-  background: "#0f0f1a",
-  border: "1px solid #1a1a2e",
-  borderRadius: "12px",
-  padding: "14px 18px",
-  color: "#fff",
-  fontSize: "15px",
-  outline: "none",
-  width: "100%",
-  boxSizing: "border-box",
-};
