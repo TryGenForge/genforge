@@ -65,7 +65,6 @@ export default function Home() {
   return (
     <main style={{ minHeight: "100vh", background: "#08080F", color: "#fff", fontFamily: "'DM Sans', sans-serif" }}>
       
-      {/* Header */}
       <header style={{ padding: "20px 24px", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
         <div style={{ fontFamily: "sans-serif", fontSize: "20px", fontWeight: 800, color: "#7B5EFF" }}>
           Gen<span style={{ color: "#fff" }}>Forge</span>
@@ -75,17 +74,13 @@ export default function Home() {
         </div>
       </header>
 
-      {/* Hero */}
       <section style={{ textAlign: "center", padding: "60px 24px 40px", position: "relative" }}>
-        {/* Grid background */}
         <div style={{
           position: "absolute", inset: 0,
           backgroundImage: "linear-gradient(#7B5EFF11 1px, transparent 1px), linear-gradient(90deg, #7B5EFF11 1px, transparent 1px)",
           backgroundSize: "60px 60px",
           pointerEvents: "none"
         }} />
-        
-        {/* Badge */}
         <div style={{
           display: "inline-flex", alignItems: "center", gap: "8px",
           border: "1px solid #7B5EFF44", borderRadius: "20px",
@@ -95,7 +90,6 @@ export default function Home() {
           <span style={{ width: "6px", height: "6px", borderRadius: "50%", background: "#7B5EFF", display: "inline-block" }} />
           BUSINESS NAME GENERATOR
         </div>
-
         <h1 style={{ fontSize: "clamp(36px, 8vw, 64px)", fontWeight: 800, lineHeight: 1.1, marginBottom: "20px", position: "relative" }}>
           Generate <span style={{ color: "#7B5EFF" }}>1000+</span><br />
           Business Names<br />
@@ -107,7 +101,6 @@ export default function Home() {
         </p>
       </section>
 
-      {/* Form */}
       <section style={{ maxWidth: "600px", margin: "0 auto", padding: "0 24px 40px" }}>
         <input
           value={businessType}
@@ -121,7 +114,6 @@ export default function Home() {
             marginBottom: "12px"
           }}
         />
-        
         <button
           onClick={handleGenerate}
           disabled={loading || !businessType.trim()}
@@ -134,8 +126,6 @@ export default function Home() {
         >
           {loading ? "Generating..." : "⚡ Generate Business Names"}
         </button>
-
-        {/* Dots indicator */}
         {!isPro && (
           <div style={{ display: "flex", alignItems: "center", gap: "8px", justifyContent: "center" }}>
             {[0, 1, 2].map(i => (
@@ -151,7 +141,6 @@ export default function Home() {
         )}
       </section>
 
-      {/* Results */}
       {results.length > 0 ? (
         <section style={{ maxWidth: "700px", margin: "0 auto", padding: "0 24px 40px" }}>
           <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "12px" }}>
@@ -180,7 +169,6 @@ export default function Home() {
           </div>
         </section>
       ) : (
-        /* Example results */
         <section style={{ maxWidth: "700px", margin: "0 auto", padding: "0 24px 40px" }}>
           <div style={{ color: "#444", fontSize: "11px", letterSpacing: "1px", marginBottom: "12px" }}>
             — EXAMPLE RESULTS FOR "TECH STARTUP"
@@ -200,7 +188,6 @@ export default function Home() {
         </section>
       )}
 
-      {/* Bullets */}
       <section style={{ maxWidth: "600px", margin: "0 auto", padding: "0 24px 40px" }}>
         <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "12px" }}>
           {[
@@ -224,12 +211,12 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Upgrade card */}
       {!isPro && (
         <section style={{ maxWidth: "600px", margin: "0 auto", padding: "0 24px 80px" }}>
           <div style={{
             background: "#0f0f1a", border: "1px solid #7B5EFF44",
-            borderRadius: "16px", padding: "28px 24px"
+            borderRadius: "16px", padding: "28px 24px",
+            textAlign: "center"
           }}>
             <h3 style={{ fontSize: "22px", fontWeight: 800, marginBottom: "8px" }}>
               Unlock <span style={{ color: "#7B5EFF" }}>Unlimited</span> Names
@@ -252,7 +239,6 @@ export default function Home() {
         </section>
       )}
 
-      {/* Paywall Modal */}
       {showPaywall && (
         <div style={{
           position: "fixed", inset: 0, background: "rgba(0,0,0,0.85)",
