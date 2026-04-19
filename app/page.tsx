@@ -17,8 +17,8 @@ export default function Home() {
   const [loading, setLoading] = useState(false);
   const [usageCount, setUsageCount] = useState(0);
   const [isPro, setIsPro] = useState(false);
-  const [showPaywall, setShowPaywall] = useState(false);
   const [copied, setCopied] = useState<string | null>(null);
+  const [checkoutLoading, setCheckoutLoading] = useState(false);
 
   useEffect(() => {
     const count = parseInt(localStorage.getItem(STORAGE_KEY) || "0");
@@ -30,7 +30,7 @@ export default function Home() {
   const handleGenerate = async () => {
     if (!businessType.trim()) return;
     if (!isPro && usageCount >= FREE_LIMIT) {
-      setShowPaywall(true);
+      handleCheckout();
       return;
     }
     setLoading(true);
@@ -51,6 +51,19 @@ export default function Home() {
       console.error(err);
     } finally {
       setLoading(false);
+    }
+  };
+
+  const handleCheckout = async () => {
+    setCheckoutLoading(true);
+    try {
+      const res = await fetch("/api/checkout", { method: "POST" });
+      const data = await res.json();
+      if (data.url) window.location.href = data.url;
+    } catch (err) {
+      console.error(err);
+    } finally {
+      setCheckoutLoading(false);
     }
   };
 
@@ -225,55 +238,19 @@ export default function Home() {
               One-time payment. No subscription. Ever.
             </p>
             <button
-              onClick={() => setShowPaywall(true)}
+              onClick={handleCheckout}
+              disabled={checkoutLoading}
               style={{
-                width: "100%", background: "none",
+                width: "100%", background: checkoutLoading ? "#333" : "none",
                 border: "1px solid #7B5EFF", borderRadius: "10px",
                 padding: "14px", fontSize: "15px", fontWeight: 700,
-                cursor: "pointer", color: "#7B5EFF"
+                cursor: checkoutLoading ? "not-allowed" : "pointer", color: "#7B5EFF"
               }}
             >
-              Get Unlimited — €4.99
+              {checkoutLoading ? "Loading..." : "Get Unlimited — €4.99"}
             </button>
           </div>
         </section>
-      )}
-
-      {showPaywall && (
-        <div style={{
-          position: "fixed", inset: 0, background: "rgba(0,0,0,0.85)",
-          display: "flex", alignItems: "center", justifyContent: "center", zIndex: 100
-        }}>
-          <div style={{
-            background: "#0f0f1a", border: "1px solid #7B5EFF44",
-            borderRadius: "20px", padding: "40px", maxWidth: "420px",
-            width: "90%", textAlign: "center"
-          }}>
-            <div style={{ fontSize: "40px", marginBottom: "16px" }}>⚡</div>
-            <h2 style={{ fontSize: "24px", marginBottom: "12px" }}>Unlock Unlimited Names</h2>
-            <p style={{ color: "#888", marginBottom: "28px", fontSize: "14px" }}>
-              One-time payment. No subscription. Ever.
-            </p>
-            <div style={{
-              background: "#7B5EFF11", border: "1px solid #7B5EFF44",
-              borderRadius: "12px", padding: "20px", marginBottom: "20px"
-            }}>
-              <div style={{ fontSize: "36px", fontWeight: 800 }}>€4.99</div>
-              <div style={{ color: "#888", fontSize: "13px" }}>one-time · no subscription</div>
-            </div>
-            <button style={{
-              width: "100%", background: "linear-gradient(135deg, #7B5EFF, #00E5FF)",
-              color: "#fff", border: "none", borderRadius: "12px",
-              padding: "16px", fontSize: "16px", fontWeight: 700,
-              cursor: "pointer", marginBottom: "12px"
-            }}>
-              Get Unlimited — €4.99
-            </button>
-            <div onClick={() => setShowPaywall(false)} style={{ color: "#444", fontSize: "13px", cursor: "pointer" }}>
-              Close
-            </div>
-          </div>
-        </div>
       )}
     </main>
   );
