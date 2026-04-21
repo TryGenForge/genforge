@@ -22,7 +22,7 @@ const tools = [
   { name: "SEO Meta Generator", desc: "Title and description tags for Google.", badge: "PRO", category: "Online Presence", href: "/tools/seo-meta-generator" },
   { name: "Social Media Bio", desc: "Instagram, LinkedIn, X bios optimised.", badge: "PRO", category: "Online Presence", href: "/tools/social-media-bio-generator" },
   { name: "Elevator Pitch", desc: "The perfect 30-second business pitch.", badge: "PRO", category: "Growth", href: "/tools/elevator-pitch-generator" },
-  { name: "Cold Email Generator", desc: "Outreach emails that get replies.", badge: "PRO", category: "Growth", href: "#" },
+  { name: "Cold Email Generator", desc: "Outreach emails that get replies.", badge: "PRO", category: "Growth", href: "/tools/cold-email-generator" },
 ];
 
 const categories = ["All", "Branding", "Online Presence", "Growth", "Planning", "Finance"];
