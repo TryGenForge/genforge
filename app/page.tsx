@@ -413,7 +413,7 @@ export default function Home() {
             </div>
             <div style={{ display: "flex", alignItems: "center", gap: "16px" }}>
               <div style={{ fontSize: "28px", fontWeight: 800, color: "#a78bfa", fontFamily: "sans-serif" }}>
-                €4.99 <span style={{ fontSize: "14px", color: "#444", fontWeight: 400, fontFamily: "inherit" }}>one-time</span>
+                €9.99 <span style={{ fontSize: "14px", color: "#444", fontWeight: 400, fontFamily: "inherit" }}>one-time</span>
               </div>
               <button
                 onClick={handleCheckout}
