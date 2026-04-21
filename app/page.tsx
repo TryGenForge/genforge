@@ -19,7 +19,7 @@ const tools = [
   { name: "Brand Story", desc: "Tell the story behind your brand.", badge: "PRO", category: "Branding", href: "/tools/brand-story-generator" },
   { name: "Bio Generator", desc: "Professional About page bio in seconds.", badge: "PRO", category: "Online Presence", href: "/tools/bio-generator" },
   { name: "Product Description", desc: "Selling copy for your products.", badge: "PRO", category: "Online Presence", href: "/tools/product-description-generator" },
-  { name: "SEO Meta Generator", desc: "Title and description tags for Google.", badge: "PRO", category: "Online Presence", href: "#" },
+  { name: "SEO Meta Generator", desc: "Title and description tags for Google.", badge: "PRO", category: "Online Presence", href: "/tools/seo-meta-generator" },
   { name: "Social Media Bio", desc: "Instagram, LinkedIn, X bios optimised.", badge: "PRO", category: "Online Presence", href: "#" },
   { name: "Elevator Pitch", desc: "The perfect 30-second business pitch.", badge: "PRO", category: "Growth", href: "#" },
   { name: "Cold Email Generator", desc: "Outreach emails that get replies.", badge: "PRO", category: "Growth", href: "#" },
