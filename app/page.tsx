@@ -346,7 +346,7 @@ export default function Home() {
           {tools.slice(0, 3).map((tool) => (
             <div
               key={tool.name}
-              onClick={() => tool.name === "Business Name Generator" && setShowGenerator(true)}
+              onClick={() => { if (tool.name === "Business Name Generator") { setShowGenerator(true); } else if (tool.href !== "#") { window.location.href = tool.href; } }}
               style={{
                 background: "linear-gradient(145deg, #110d1a 0%, #0f0f0f 100%)",
                 border: "1px solid rgba(124,58,237,0.2)", borderRadius: "12px",
@@ -378,7 +378,7 @@ export default function Home() {
           {filteredTools.map((tool) => (
             <div
               key={tool.name}
-              onClick={() => tool.name === "Business Name Generator" && setShowGenerator(true)}
+              onClick={() => { if (tool.name === "Business Name Generator") { setShowGenerator(true); } else if (tool.href !== "#") { window.location.href = tool.href; } }}
               style={{
                 background: "#0f0f0f", border: "1px solid #1c1c1c",
                 borderRadius: "10px", padding: "14px 16px", cursor: "pointer",
