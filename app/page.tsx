@@ -131,7 +131,7 @@ export default function Home() {
                 fontWeight: 500, cursor: "pointer", fontFamily: "inherit"
               }}
             >
-              {checkoutLoading ? "Loading..." : "Get PRO — €4.99"}
+              {checkoutLoading ? "Loading..." : "Get PRO — €9.99"}
             </button>
           )}
           {isPro && (
