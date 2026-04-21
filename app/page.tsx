@@ -16,7 +16,7 @@ const tools = [
   { name: "Business Name Generator", desc: "Generate unique names for your business in seconds.", badge: "FREE", category: "Branding", href: "/" },
   { name: "Tagline Generator", desc: "Catchy slogans that make your brand stick.", badge: "PRO", category: "Branding", href: "/tools/tagline-generator" },
   { name: "Mission Statement", desc: "Define your company vision and mission.", badge: "PRO", category: "Branding", href: "/tools/mission-statement-generator" },
-  { name: "Brand Story", desc: "Tell the story behind your brand.", badge: "PRO", category: "Branding", href: "#" },
+  { name: "Brand Story", desc: "Tell the story behind your brand.", badge: "PRO", category: "Branding", href: "/tools/brand-story-generator" },
   { name: "Bio Generator", desc: "Professional About page bio in seconds.", badge: "PRO", category: "Online Presence", href: "#" },
   { name: "Product Description", desc: "Selling copy for your products.", badge: "PRO", category: "Online Presence", href: "#" },
   { name: "SEO Meta Generator", desc: "Title and description tags for Google.", badge: "PRO", category: "Online Presence", href: "#" },
