@@ -17,12 +17,30 @@ const tools = [
   { name: "Tagline Generator", desc: "Catchy slogans that make your brand stick.", badge: "PRO", category: "Branding", href: "/tools/tagline-generator" },
   { name: "Mission Statement", desc: "Define your company vision and mission.", badge: "PRO", category: "Branding", href: "/tools/mission-statement-generator" },
   { name: "Brand Story", desc: "Tell the story behind your brand.", badge: "PRO", category: "Branding", href: "/tools/brand-story-generator" },
+  { name: "Brand Voice Generator", desc: "Define your tone of voice and communication style.", badge: "PRO", category: "Branding", href: "/tools/brand-voice-generator" },
+  { name: "Company Values Generator", desc: "Generate core values that define your culture.", badge: "PRO", category: "Branding", href: "/tools/company-values-generator" },
+  { name: "Brand Positioning Statement", desc: "Stand out from competitors with a clear positioning.", badge: "PRO", category: "Branding", href: "/tools/brand-positioning-generator" },
+  { name: "Logo Concept Generator", desc: "Creative logo concepts and direction for designers.", badge: "PRO", category: "Branding", href: "/tools/logo-concept-generator" },
   { name: "Bio Generator", desc: "Professional About page bio in seconds.", badge: "PRO", category: "Online Presence", href: "/tools/bio-generator" },
   { name: "Product Description", desc: "Selling copy for your products.", badge: "PRO", category: "Online Presence", href: "/tools/product-description-generator" },
   { name: "SEO Meta Generator", desc: "Title and description tags for Google.", badge: "PRO", category: "Online Presence", href: "/tools/seo-meta-generator" },
   { name: "Social Media Bio", desc: "Instagram, LinkedIn, X bios optimised.", badge: "PRO", category: "Online Presence", href: "/tools/social-media-bio-generator" },
+  { name: "About Page Generator", desc: "Write a compelling About page for your business.", badge: "PRO", category: "Online Presence", href: "/tools/about-page-generator" },
+  { name: "Homepage Headline Generator", desc: "Hero headlines that convert visitors.", badge: "PRO", category: "Online Presence", href: "/tools/homepage-headline-generator" },
+  { name: "FAQ Generator", desc: "Generate FAQs that answer your customers' questions.", badge: "PRO", category: "Online Presence", href: "/tools/faq-generator" },
+  { name: "Landing Page Copy Generator", desc: "Full landing page copy ready to publish.", badge: "PRO", category: "Online Presence", href: "/tools/landing-page-copy-generator" },
   { name: "Elevator Pitch", desc: "The perfect 30-second business pitch.", badge: "PRO", category: "Growth", href: "/tools/elevator-pitch-generator" },
   { name: "Cold Email Generator", desc: "Outreach emails that get replies.", badge: "PRO", category: "Growth", href: "/tools/cold-email-generator" },
+  { name: "Ad Copy Generator", desc: "Google and Facebook ads that drive clicks.", badge: "PRO", category: "Growth", href: "/tools/ad-copy-generator" },
+  { name: "Blog Post Intro Generator", desc: "Hook readers from the first sentence.", badge: "PRO", category: "Growth", href: "/tools/blog-post-intro-generator" },
+  { name: "Call-to-Action Generator", desc: "CTAs that turn visitors into customers.", badge: "PRO", category: "Growth", href: "/tools/cta-generator" },
+  { name: "Lead Magnet Idea Generator", desc: "Free offer ideas that grow your email list.", badge: "PRO", category: "Growth", href: "/tools/lead-magnet-generator" },
+  { name: "Testimonial Request Email", desc: "Emails that get customers to leave reviews.", badge: "PRO", category: "Growth", href: "/tools/testimonial-request-generator" },
+  { name: "Business Plan Summary", desc: "A concise business plan you can share instantly.", badge: "PRO", category: "Planning", href: "/tools/business-plan-generator" },
+  { name: "SWOT Analysis Generator", desc: "Analyse strengths, weaknesses, opportunities, threats.", badge: "PRO", category: "Planning", href: "/tools/swot-generator" },
+  { name: "Competitor Analysis Generator", desc: "Structured competitor analysis in seconds.", badge: "PRO", category: "Planning", href: "/tools/competitor-analysis-generator" },
+  { name: "90-Day Goal Planner", desc: "Break your vision into a 90-day action plan.", badge: "PRO", category: "Planning", href: "/tools/goal-planner-generator" },
+  { name: "Pricing Page Copy Generator", desc: "Copy that makes your pricing irresistible.", badge: "PRO", category: "Finance", href: "/tools/pricing-page-generator" },
 ];
 
 const categories = ["All", "Branding", "Online Presence", "Growth", "Planning", "Finance"];
@@ -156,7 +174,7 @@ export default function Home() {
             marginBottom: "24px", fontWeight: 600, letterSpacing: "0.3px"
           }}>
             <span style={{ width: "6px", height: "6px", borderRadius: "50%", background: "#a78bfa", display: "inline-block" }} />
-            10 AI-powered tools — growing weekly
+            28 AI-powered tools — growing weekly
           </div>
           <h1 style={{ fontSize: "52px", fontWeight: 800, lineHeight: 1.05, letterSpacing: "-1.5px", marginBottom: "18px", fontFamily: "sans-serif" }}>
             Build your business<br />
@@ -220,7 +238,7 @@ export default function Home() {
             <div style={{ display: "flex", flexDirection: "column", gap: "12px" }}>
               {[
                 { name: "Tagline Generator", badge: "PRO" },
-                { name: "Elevator Pitch", badge: "NEW" },
+                { name: "Elevator Pitch", badge: "PRO" },
                 { name: "Mission Statement", badge: "PRO" },
               ].map((t) => (
                 <div key={t.name} style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
@@ -235,7 +253,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* GENERATOR (показва се при клик на Try free) */}
+      {/* GENERATOR */}
       {showGenerator && (
         <section style={{ maxWidth: "700px", margin: "0 auto", padding: "0 40px 60px" }}>
           <div style={{ background: "#0f0f0f", border: "1px solid #1c1c1c", borderRadius: "16px", padding: "32px" }}>
