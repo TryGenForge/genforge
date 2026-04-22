@@ -194,3 +194,33 @@ export default function BrandPositioningGenerator() {
             </div>
             <div style={{ background: "#0f0f0f", border: "1px solid #1c1c1c", borderRadius: "12px", padding: "24px" }}>
               <div style={{ fontSize: "11px", color: "#444", letterSpacing: "2px", textTransform: "uppercase", marginBottom: "8px" }}>Brand Promise</div>
+              <div style={{ fontSize: "16px", fontWeight: 700, color: "#a78bfa" }}>{fullResult.promise}</div>
+            </div>
+            <div style={{ background: "#0f0f0f", border: "1px solid #1c1c1c", borderRadius: "12px", padding: "24px" }}>
+              <div style={{ fontSize: "11px", color: "#444", letterSpacing: "2px", textTransform: "uppercase", marginBottom: "12px" }}>Alternative Angles</div>
+              {fullResult.alternatives?.map((a: string, i: number) => (
+                <div key={i} style={{ fontSize: "13px", color: "#888", marginBottom: "8px", paddingLeft: "12px", borderLeft: "2px solid #333" }}>{a}</div>
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
+
+      <footer style={{
+        borderTop: "1px solid #1c1c1c", padding: "28px 40px",
+        display: "flex", justifyContent: "space-between", alignItems: "center", marginTop: "40px"
+      }}>
+        <Link href="/" style={{ fontSize: "15px", fontWeight: 800, color: "#444", textDecoration: "none" }}>
+          Gen<span style={{ color: "#7c3aed" }}>Forge</span>
+        </Link>
+        <div style={{ display: "flex", gap: "28px" }}>
+          {[{ label: "Privacy", href: "/privacy" }, { label: "Terms", href: "/terms" }, { label: "Refund", href: "/refund" }, { label: "Contact", href: "/contact" }].map((l) => (
+            <Link key={l.label} href={l.href} style={{ fontSize: "12px", color: "#444", textDecoration: "none" }}>{l.label}</Link>
+          ))}
+        </div>
+        <div style={{ fontSize: "12px", color: "#333" }}>© 2026 GenForge</div>
+      </footer>
+
+    </main>
+  );
+}
