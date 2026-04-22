@@ -96,7 +96,7 @@ export default function TaglineGenerator() {
                 fontWeight: 500, cursor: "pointer", fontFamily: "inherit"
               }}
             >
-              {checkoutLoading ? "Loading..." : "Get PRO — €4.99"}
+              {checkoutLoading ? "Loading..." : "Get PRO — €9.99"}
             </button>
           )}
           {isPro && (
@@ -233,7 +233,7 @@ export default function TaglineGenerator() {
                     fontWeight: 700, cursor: "pointer", fontFamily: "inherit"
                   }}
                 >
-                  {checkoutLoading ? "Loading..." : "Get Unlimited — €4.99"}
+                  {checkoutLoading ? "Loading..." : "Get Unlimited — €9.99"}
                 </button>
               </div>
             </div>

@@ -88,7 +88,7 @@ export default function MissionStatementGenerator() {
         <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
           {!isPro && (
             <button onClick={handleCheckout} disabled={checkoutLoading} style={{ background: "#7c3aed", color: "#fff", border: "none", padding: "8px 18px", borderRadius: "7px", fontSize: "13px", fontWeight: 500, cursor: "pointer", fontFamily: "inherit" }}>
-              {checkoutLoading ? "Loading..." : "Get PRO — €4.99"}
+              {checkoutLoading ? "Loading..." : "Get PRO — €9.99"}
             </button>
           )}
           {isPro && (
@@ -147,7 +147,7 @@ export default function MissionStatementGenerator() {
                 <h3 style={{ fontSize: "20px", fontWeight: 800, marginBottom: "8px" }}>Unlock all 6 statements</h3>
                 <p style={{ fontSize: "13px", color: "#888", marginBottom: "20px", fontWeight: 300 }}>One payment. All tools. Forever.</p>
                 <button onClick={handleCheckout} disabled={checkoutLoading} style={{ width: "100%", background: "#7c3aed", color: "#fff", border: "none", padding: "13px", borderRadius: "8px", fontSize: "15px", fontWeight: 700, cursor: "pointer", fontFamily: "inherit" }}>
-                  {checkoutLoading ? "Loading..." : "Get Unlimited — €4.99"}
+                  {checkoutLoading ? "Loading..." : "Get Unlimited — €9.99"}
                 </button>
               </div>
             </div>
