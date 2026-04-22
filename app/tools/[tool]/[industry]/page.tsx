@@ -32,58 +32,57 @@ const tools: Record<string, { name: string; desc: string; action: string }> = {
 };
 
 const industries = [
-  "restaurant", "gym", "law firm", "coffee shop", "e-commerce", "SaaS", "fitness coach",
-  "real estate", "dental clinic", "marketing agency", "bakery", "hotel", "photography",
-  "consulting", "retail store", "hair salon", "accounting firm", "personal trainer",
-  "wedding planner", "travel agency", "pet shop", "yoga studio", "online course", "podcast",
-  "nonprofit", "construction", "interior design", "fashion brand", "tech startup",
-  "recruitment agency", "insurance broker", "mortgage broker", "car dealership", "pharmacy",
-  "veterinary clinic", "cleaning company", "landscaping", "plumbing", "electrician",
-  "tutoring", "childcare", "catering", "event planning", "music school", "art studio",
-  "tattoo studio", "florist", "jewellery", "optician", "physiotherapy",
-  "small business", "startup", "freelancer", "agency", "enterprise", "solopreneur",
-  "side hustle", "local business", "online business", "service business", "product business",
-  "B2B company", "B2C company", "family business", "new business", "growing business",
-  "established business", "creative business", "professional services", "trade business",
-  "health business", "food business", "tech business", "retail business", "hospitality business",
-  "education business", "coaching business", "consulting business", "digital business",
-  "brick and mortar", "subscription business", "marketplace", "platform", "community",
-  "membership site", "ecommerce store", "dropshipping business", "print on demand",
-  "affiliate business", "content creator", "influencer", "coach", "mentor", "speaker",
-  "author", "blogger", "YouTuber", "podcaster", "photographer", "designer",
+  "restaurant", "gym", "law-firm", "coffee-shop", "e-commerce", "saas", "fitness-coach",
+  "real-estate", "dental-clinic", "marketing-agency", "bakery", "hotel", "photography",
+  "consulting", "retail-store", "hair-salon", "accounting-firm", "personal-trainer",
+  "wedding-planner", "travel-agency", "pet-shop", "yoga-studio", "online-course", "podcast",
+  "nonprofit", "construction", "interior-design", "fashion-brand", "tech-startup",
+  "recruitment-agency", "insurance-broker", "mortgage-broker", "car-dealership", "pharmacy",
+  "veterinary-clinic", "cleaning-company", "landscaping", "plumbing", "electrician",
+  "tutoring", "childcare", "catering", "event-planning", "music-school", "art-studio",
+  "tattoo-studio", "florist", "jewellery", "optician", "physiotherapy",
+  "small-business", "startup", "freelancer", "agency", "enterprise", "solopreneur",
+  "side-hustle", "local-business", "online-business", "service-business", "product-business",
+  "b2b-company", "b2c-company", "family-business", "new-business", "growing-business",
+  "established-business", "creative-business", "professional-services", "trade-business",
+  "health-business", "food-business", "tech-business", "retail-business", "hospitality-business",
+  "education-business", "coaching-business", "consulting-business", "digital-business",
+  "brick-and-mortar", "subscription-business", "marketplace", "platform", "community",
+  "membership-site", "ecommerce-store", "dropshipping-business", "print-on-demand",
+  "affiliate-business", "content-creator", "influencer", "coach", "mentor", "speaker",
+  "author", "blogger", "youtuber", "podcaster", "photographer", "designer",
 ];
 
 export async function generateStaticParams() {
   const params = [];
   for (const tool of Object.keys(tools)) {
     for (const industry of industries) {
-      params.push({
-        tool,
-        industry: industry.toLowerCase().replace(/\s+/g, "-"),
-      });
+      params.push({ tool, industry });
     }
   }
   return params;
 }
 
-export async function generateMetadata({ params }: { params: { tool: string; industry: string } }): Promise<Metadata> {
-  const tool = tools[params.tool];
-  const industry = params.industry.replace(/-/g, " ");
+export async function generateMetadata({ params }: { params: Promise<{ tool: string; industry: string }> }): Promise<Metadata> {
+  const { tool: toolKey, industry } = await params;
+  const tool = tools[toolKey];
+  const industryName = industry.replace(/-/g, " ");
   if (!tool) return { title: "GenForge" };
   return {
-    title: `${tool.name} for ${industry} — GenForge`,
-    description: `Generate ${tool.desc} for your ${industry} business in seconds. Free to try — no signup required.`,
+    title: `${tool.name} for ${industryName} — GenForge`,
+    description: `Generate ${tool.desc} for your ${industryName} business in seconds. Free to try — no signup required.`,
   };
 }
 
-export default function IndustryToolPage({ params }: { params: { tool: string; industry: string } }) {
-  const tool = tools[params.tool];
-  const industry = params.industry.replace(/-/g, " ");
+export default async function IndustryToolPage({ params }: { params: Promise<{ tool: string; industry: string }> }) {
+  const { tool: toolKey, industry } = await params;
+  const tool = tools[toolKey];
+  const industryName = industry.replace(/-/g, " ");
 
   if (!tool) return null;
 
   const relatedTools = Object.entries(tools)
-    .filter(([key]) => key !== params.tool)
+    .filter(([key]) => key !== toolKey)
     .slice(0, 4);
 
   return (
@@ -99,7 +98,7 @@ export default function IndustryToolPage({ params }: { params: { tool: string; i
         <Link href="/" style={{ fontFamily: "sans-serif", fontSize: "19px", fontWeight: 800, color: "#f0f0f0", textDecoration: "none" }}>
           Gen<span style={{ color: "#7c3aed" }}>Forge</span>
         </Link>
-        <Link href={`/tools/${params.tool}`} style={{
+        <Link href={`/tools/${toolKey}`} style={{
           background: "#7c3aed", color: "#fff", border: "none",
           padding: "8px 18px", borderRadius: "7px", fontSize: "13px",
           fontWeight: 500, textDecoration: "none"
@@ -115,17 +114,17 @@ export default function IndustryToolPage({ params }: { params: { tool: string; i
           borderRadius: "20px", padding: "5px 12px", fontSize: "12px", color: "#a78bfa",
           marginBottom: "24px", fontWeight: 600, textTransform: "capitalize"
         }}>
-          {industry}
+          {industryName}
         </div>
         <h1 style={{ fontSize: "42px", fontWeight: 800, lineHeight: 1.1, letterSpacing: "-1px", marginBottom: "16px" }}>
           {tool.name} for{" "}
-          <span style={{ color: "#7c3aed", textTransform: "capitalize" }}>{industry}</span>
+          <span style={{ color: "#7c3aed", textTransform: "capitalize" }}>{industryName}</span>
         </h1>
         <p style={{ fontSize: "16px", color: "#888", lineHeight: 1.6, marginBottom: "32px", fontWeight: 300 }}>
-          Generate {tool.desc} tailored specifically for your {industry} business in seconds.
+          Generate {tool.desc} tailored specifically for your {industryName} business in seconds.
           No copywriter needed — just AI that understands your industry.
         </p>
-        <Link href={`/tools/${params.tool}`} style={{
+        <Link href={`/tools/${toolKey}`} style={{
           display: "inline-block", background: "#7c3aed", color: "#fff",
           padding: "14px 32px", borderRadius: "8px", fontSize: "15px",
           fontWeight: 700, textDecoration: "none"
@@ -137,12 +136,12 @@ export default function IndustryToolPage({ params }: { params: { tool: string; i
       <section style={{ maxWidth: "700px", margin: "0 auto", padding: "0 40px 60px" }}>
         <div style={{ background: "#0f0f0f", border: "1px solid #1c1c1c", borderRadius: "16px", padding: "32px", marginBottom: "24px" }}>
           <h2 style={{ fontSize: "22px", fontWeight: 800, marginBottom: "16px", letterSpacing: "-0.3px" }}>
-            Why use AI for your {industry}?
+            Why use AI for your {industryName}?
           </h2>
           <p style={{ fontSize: "14px", color: "#888", lineHeight: 1.8 }}>
-            Running a {industry} business means wearing many hats. Writing copy, creating brand materials,
-            and planning strategy takes hours — time you don't have. GenForge's {tool.name} is built
-            to give {industry} owners professional-quality {tool.desc} in seconds, so you can focus
+            Running a {industryName} business means wearing many hats. Writing copy, creating brand materials,
+            and planning strategy takes hours — time you do not have. GenForge&apos;s {tool.name} is built
+            to give {industryName} owners professional-quality {tool.desc} in seconds, so you can focus
             on what actually matters: growing your business.
           </p>
         </div>
@@ -150,7 +149,7 @@ export default function IndustryToolPage({ params }: { params: { tool: string; i
         <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "14px", marginBottom: "40px" }}>
           {[
             { title: "Instant results", desc: `Generate ${tool.desc} in under 30 seconds.` },
-            { title: "Industry-specific", desc: `Tailored for ${industry} businesses specifically.` },
+            { title: "Industry-specific", desc: `Tailored for ${industryName} businesses specifically.` },
             { title: "No experience needed", desc: "No copywriting or marketing skills required." },
             { title: "One-time payment", desc: "Pay once, use all 28 tools forever." },
           ].map((item, i) => (
@@ -162,7 +161,7 @@ export default function IndustryToolPage({ params }: { params: { tool: string; i
         </div>
 
         <div style={{ textAlign: "center", marginBottom: "60px" }}>
-          <Link href={`/tools/${params.tool}`} style={{
+          <Link href={`/tools/${toolKey}`} style={{
             display: "inline-block", background: "#7c3aed", color: "#fff",
             padding: "16px 40px", borderRadius: "8px", fontSize: "16px",
             fontWeight: 700, textDecoration: "none"
@@ -174,11 +173,11 @@ export default function IndustryToolPage({ params }: { params: { tool: string; i
 
         <div>
           <div style={{ fontSize: "11px", fontWeight: 700, letterSpacing: "2px", textTransform: "uppercase", color: "#444", marginBottom: "16px" }}>
-            More tools for your {industry}
+            More tools for your {industryName}
           </div>
           <div style={{ display: "flex", flexDirection: "column", gap: "10px" }}>
             {relatedTools.map(([key, t]) => (
-              <Link key={key} href={`/tools/${key}/${params.industry}`} style={{
+              <Link key={key} href={`/tools/${key}/${industry}`} style={{
                 background: "#0f0f0f", border: "1px solid #1c1c1c", borderRadius: "10px",
                 padding: "14px 18px", textDecoration: "none", color: "#f0f0f0",
                 display: "flex", justifyContent: "space-between", alignItems: "center"
