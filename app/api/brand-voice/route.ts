@@ -14,7 +14,7 @@ export async function POST(req: NextRequest) {
         role: "user",
         content: `Generate a brand voice guide for a ${businessType} business targeting ${audience}. Personality: ${personality}.
 
-Return ONLY valid JSON in this exact format:
+Return ONLY valid JSON, no markdown, no backticks, no explanation. Just the raw JSON object:
 {
   "tone": "2-3 word tone description",
   "adjectives": ["word1", "word2", "word3", "word4"],
@@ -27,6 +27,7 @@ Return ONLY valid JSON in this exact format:
   });
 
   const text = response.content[0].type === "text" ? response.content[0].text : "";
-  const json = JSON.parse(text);
+  const clean = text.replace(/```json|```/g, "").trim();
+  const json = JSON.parse(clean);
   return NextResponse.json(json);
 }
